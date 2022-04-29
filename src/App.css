@@ -36,3 +36,80 @@
     transform: rotate(360deg);
   }
 }
+.title{
+  text-align: center;
+  color: chocolate;
+}
+.menu {
+  background-color: darkgrey;
+  width: auto;
+
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: left;
+  padding-left: 5em;
+}
+.searchBar {
+  background-color: darkgrey;
+  width: 20%;
+  float: right;
+  margin-right: 10%;
+  padding-right: 5em;
+  text-align: right;
+}
+.container {
+  width: 90%;
+  height: 80vh;
+  position: relative;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.inbox{
+
+  margin-left: 10%;
+  margin-right: 10% ;
+  width: 80%;
+  height: 80vh;
+  border: 1px #282c34 solid;
+  text-align: left;
+  align-content: center;
+  alignment: center;
+}
+
+table {
+
+  margin: auto;
+}
+.email{
+  width: auto;
+  height: 50vh;
+  z-index: 9;
+  margin-left: 10%;
+  margin-right: 10%;
+  box-shadow: 2px 2px;
+  white-space: nowrap;
+}
+.modal {
+  /*display: none;*/
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 20%;
+  top: 20%;
+  width: 60%; /* Full width */
+  height: 60%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: blanchedalmond; /* Fallback color */
+  border: 1px #282c34 solid;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.7);
+  padding: 1.5em;
+}
+
+.closeButton {
+  margin: 1em;
+  position: absolute;
+ text-align: center;
+  top: 0;
+  right: 0;
+  padding: 0.4em;
+}
