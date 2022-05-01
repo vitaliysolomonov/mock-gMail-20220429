@@ -1,59 +1,64 @@
 import './App.css';
-import Emails from "./Emails";
+
 import React, {Component, useEffect, useState} from "react";
 import axios from "axios";
 import Inbox from "./components/Inbox";
 import EmailModal from "./components/EmailModal";
+import CreateEmailModal from "./components/CreateEmailModal";
 
-// export default class App extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {allEmails: []};
-//     }
-//    async componentDidMount() {
-//         const url = "http://localhost:3001/emails";
-//         const response = await fetch(url);
-//         const JSONresponse = await response.json();
-//         console.log(JSONresponse);
-//         this.setState({allEmails: JSONresponse});
-//     }
-//     render() {
-//         return (
-//             <div className="App">
-//                 <h1>GMail</h1>
-//                 <div className={'menu'}>menu
-//                     <div className={'searchBar'}>search bar</div>
-//                 </div>
-//                 <Emails allEmails = {this.state.allEmails}/>
-//             </div>
-//         );
-//
-//     }
-// }
+function App() {
+    const [emails, setEmails] = useState([])
+    const [currentEmail, setCurrentEmail] = useState(null)
+    const [isComposingNewEmail, setIsComposingNewEmail] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
+    // const [foundEmails, setFoundEmails] = useState([])
 
-function App () {
-    const[emails, setEmails] = useState([])
-    const[currentEmail, setCurrentEmail] = useState(null)
+    const getEmails = async () => {
+        const {data} = await axios.get('http://localhost:3001/emails')
+        setEmails(data);
+    }
 
     useEffect(() => {
-
-        const getEmails = async () => {
-            const {data} = await axios.get('http://localhost:3001/emails')
-            setEmails(data);
-        }
         getEmails();
-    }, [])
+    }, [searchQuery])
 
     const selectingEmail = (email) => {
         setCurrentEmail(email);
     }
 
+    const toggleComposeModal = () => {
+        setIsComposingNewEmail(!isComposingNewEmail);
+    }
+
+    // const findEmails = async (searchQuery) => {
+    //     console.log(`http://localhost:3001/search?query=${searchQuery}`)
+    //     const {data} = await axios.get(`http://localhost:3001/search?query=${searchQuery}`);
+    //     setEmails(data);
+    // }
+
+
     return (
         <div>
             <h1 className={'title'}>gMail</h1>
-            <Inbox emails={emails} selectingEmail = {selectingEmail}/>
-            {console.log(currentEmail)}
-            {currentEmail && <EmailModal currentEmail = {currentEmail} selectingEmail = {selectingEmail}/>}
+            <div><button className={'compose'} onClick={toggleComposeModal}>Compose</button> </div>
+            <div className={'searchBar'}>
+                <label htmlFor={"search"}>Search: </label>
+                <input
+                    name={"search"}
+
+                    placeholder={'Search Email'}
+                    value={searchQuery}
+                    onChange={(e)=>setSearchQuery(e.target.value)}
+
+                /></div>
+            <Inbox emails={searchQuery ?
+                emails.filter((email) => {
+                    if(JSON.stringify(email).toLowerCase().includes(searchQuery.toLowerCase())) return email;
+                })
+                : emails}
+                   selectingEmail={selectingEmail}/>
+            {currentEmail && <EmailModal currentEmail={currentEmail} selectingEmail={selectingEmail}/>}
+            {isComposingNewEmail && <CreateEmailModal toggleComposeModal={toggleComposeModal} getEmails={getEmails} />}
         </div>
 
     )

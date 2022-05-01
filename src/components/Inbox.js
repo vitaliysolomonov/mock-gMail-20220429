@@ -5,9 +5,9 @@ const Inbox = ({emails, selectingEmail}) =>
         <table>
         <thead>
         <tr>
-            <th>From</th>
-            <th>Subject</th>
-            <th>Date</th>
+            <th className={'from'}>From</th>
+            <th className={'from'}>Subject</th>
+            <th className={'date'}>Date</th>
         </tr>
         </thead>
         <tbody>
